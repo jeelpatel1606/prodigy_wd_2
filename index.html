@@ -1,0 +1,87 @@
+<html>
+  <head>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+      @font-face{
+       font-family:'digital-font';
+       src: url('digital-7.ttf');
+      }
+      .timer{
+        font-family:digital-font;
+        font-size:30px;
+
+    
+      }
+
+    </style>
+  </head>
+  <body>
+    <div class='timer'>
+      <label id='hour'>00</label>:
+      <label id='minute'>00</label>:
+      <label id='second'>00</label>
+    </div>
+    <input type='button' value='Start' id='start'>
+    <input type='button' value='Stop' id='stop'>
+    <input type='button' value='Reset' id='reset'>
+
+    <script>
+      var interval;
+      document.querySelector("#start").onclick=function(){
+        interval=setInterval(timer,1000);
+        document.querySelector("#start").disabled=true;
+        document.querySelector("#stop").disabled=false;
+        document.querySelector("#reset").disabled=false;
+      }
+      
+      document.querySelector("#stop").onclick=function(){
+        clearInterval(interval);
+        document.querySelector("#start").disabled=false;
+        document.querySelector("#stop").disabled=true;
+      }
+      
+      document.querySelector("#reset").onclick=function(){
+        document.querySelector("#start").disabled=false;
+        document.querySelector("#stop").disabled=true;
+        document.querySelector("#reset").disabled=true;
+        
+        clearInterval(interval);
+        document.querySelector("#hour").innerText="00";
+        document.querySelector("#minute").innerText="00";
+        document.querySelector("#second").innerText="00";
+      }
+      
+      function timer(){
+        var hour=document.querySelector("#hour");
+        var minute=document.querySelector("#minute");
+        var second=document.querySelector("#second");
+        
+        h=Number(hour.innerText);
+        m=Number(minute.innerText);
+        s=Number(second.innerText);
+        s++;
+        if(s>60){
+          s=0;
+          m++;
+        }
+        if(m>60){
+          m=0;
+          h++;
+        }
+        hour.innerText=formatTime(h);
+        minute.innerText=formatTime(m);
+        second.innerText=formatTime(s);
+      }
+      
+      function formatTime(x){
+        if(x<10){
+          return "0"+x;
+        }
+        return x;
+      }
+    </script>
+  </body>
+</html>
